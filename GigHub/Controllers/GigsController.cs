@@ -34,7 +34,7 @@ namespace GigHub.Controllers
             var gig = new Gig()
             {
                 ArtistId = User.Identity.GetUserId(),
-                DateTime = DateTime.Parse(string.Format("{0} {1}", vm.Date, vm.Time)), //for now, assuming user puts in valid data (validation in the next task)
+                DateTime = DateTime.Parse($"{vm.Date} {vm.Time}"), //for now, assuming user puts in valid data (validation in the next task)
                 GenreId = vm.Genre,
                 Venue = vm.Venue
             };
