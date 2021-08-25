@@ -30,10 +30,16 @@ namespace GigHub.Controllers
         [HttpPost]
         public ActionResult Create(GigFormViewModel vm)
         {
+            if (!ModelState.IsValid)
+            {
+                vm.Genres = _context.Genres.ToList();
+                return View("Create", vm);
+            }
+
             var gig = new Gig()
             {
                 ArtistId = User.Identity.GetUserId(),
-                DateTime = vm.DateTime, //for now, assuming user puts in valid data (validation in the next task)
+                DateTime = vm.GetDateTime(),
                 GenreId = vm.Genre,
                 Venue = vm.Venue
             };
