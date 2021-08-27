@@ -29,13 +29,24 @@ textarea {
     border-color: #ff4342;
 }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: #ffffff
-}
+    .navbar-inverse .navbar-nav > li > a {
+        color: #ffffff
+    }
 
-.navbar-inverse .navbar-brand {
-    color: #ffffff
-}
+    .navbar-inverse .navbar-nav > .dropdown > a .caret {
+        border-top-color: #ffffff;
+        border-bottom-color: #ffffff;
+    }
+
+    .navbar-inverse .navbar-nav > .open > a,
+    .navbar-inverse .navbar-nav > .open > a:hover,
+    .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: rgba(205, 40, 39, 0.55);
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: #ffffff
+    }
 
 body {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -55,8 +66,8 @@ body {
 
     .form-control :focus {
         border-color: #2196f3;
-        box-shadow: none;
         -webkit-box-shadow: none;
+        box-shadow: none;
     }
 
 .btn {
@@ -64,4 +75,9 @@ body {
     padding: 7px 20px;
     -ms-border-radius: 9px;
     border-radius: 9px;
+}
+
+.dropdown-menu {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
