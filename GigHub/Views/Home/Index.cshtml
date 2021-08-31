@@ -17,18 +17,14 @@
                 </div>
             </div>
             <div class="details">
-                <div>
-                    <span class="artist">
-                        @gig.Artist.Name
-                    </span>
-                    <button data-artist-id="@gig.ArtistId" class="btn btn-default pull-right js-toggle-following">Follow</button>
-                </div>
-                <div>
+                <span class="artist">
+                    @gig.Artist.Name 
+                    <button data-artist-id="@gig.ArtistId" class="btn btn-link js-toggle-following">Follow</button>
+                </span>
                     <span class="genre">
                         @gig.Genre.Name
                     </span>
                     <button data-gig-id="@gig.Id" class="btn btn-default pull-right js-toggle-attendance">Going?</button>
-                </div>
             </div>
         </li>
     }
@@ -55,9 +51,7 @@
                 var button = $(e.target);
                 $.post("/api/followings/", { ArtistId: button.data("artist-id") })
                     .done(function () {
-                        button.removeClass("btn-default")
-                            .addClass("btn-info")
-                            .text("Following");
+                        button.text("Following");
                     })
                     .fail(function () {
                         alert("Something failed!");
