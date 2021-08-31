@@ -22,7 +22,7 @@ namespace GigHub.Controllers
             var followerId = User.Identity.GetUserId();
 
             if (_context.Followings.Any(a => a.FollowerId == followerId || a.ArtistId == dto.ArtistId))
-                return BadRequest("The attendance already exists.");
+                return BadRequest("The following already exists.");
 
             var following = new Following()
             {
