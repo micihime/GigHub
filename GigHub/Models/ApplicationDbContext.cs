@@ -8,6 +8,7 @@ namespace GigHub.Models
         public DbSet<Gig> Gigs { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Attendance> Attendances { get; set; } //in order to be able to query this db table
+        public DbSet<Following> Followings { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -28,6 +29,11 @@ namespace GigHub.Models
             //removing the cascade on delete for Gigs and Attendance table
             modelBuilder.Entity<Attendance>().
                 HasRequired(a => a.Gig)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Following>().
+                HasRequired(a => a.Follower)
                 .WithMany()
                 .WillCascadeOnDelete(false);
 

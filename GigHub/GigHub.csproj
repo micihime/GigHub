@@ -178,6 +178,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FollowingsController.cs" />
+    <Compile Include="Dtos\FollowingDto.cs" />
     <Compile Include="Dtos\AttendanceDto.cs" />
     <Compile Include="Controllers\AttendancesController.cs" />
     <Compile Include="Controllers\GigsController.cs" />
@@ -214,8 +216,13 @@
     <Compile Include="Migrations\202108300741593_AddAttendance.Designer.cs">
       <DependentUpon>202108300741593_AddAttendance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108310907577_AddFollowing.cs" />
+    <Compile Include="Migrations\202108310907577_AddFollowing.Designer.cs">
+      <DependentUpon>202108310907577_AddFollowing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
+    <Compile Include="Models\Following.cs" />
     <Compile Include="ViewModels\ForgotPasswordViewModel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="ViewModels\ExternalLoginConfirmationViewModel.cs" />
@@ -296,6 +303,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Followings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -331,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202108300741593_AddAttendance.resx">
       <DependentUpon>202108300741593_AddAttendance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108310907577_AddFollowing.resx">
+      <DependentUpon>202108310907577_AddFollowing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
