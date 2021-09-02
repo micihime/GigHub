@@ -303,6 +303,7 @@
     <Content Include="Views\Gigs\Create.cshtml" />
     <Content Include="Views\Shared\GigList.cshtml" />
     <Content Include="Views\Artists\Index.cshtml" />
+    <Content Include="Views\Gigs\Mine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
