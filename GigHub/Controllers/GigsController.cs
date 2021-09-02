@@ -1,6 +1,7 @@
 ﻿using GigHub.Models;
 using GigHub.ViewModels;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -35,18 +36,6 @@ namespace GigHub.Controllers
             };
 
             return View("GigList", viewModel);
-        }
-
-        [Authorize]
-        public ActionResult Following()
-        {
-            var userId = User.Identity.GetUserId();
-            var artists = _context.Followings
-                .Where(a => a.FollowerId == userId)
-                .Select(a => a.Artist)
-                .ToList();
-
-            return View(artists);
         }
 
         [Authorize]
