@@ -1,0 +1,16 @@
+﻿@model IEnumerable<GigHub.Models.ApplicationUser>
+
+<h1>Artists I'm Following</h1>
+
+<ul class="gigs vertical-offset">
+    @foreach (var artist in Model)
+    {
+        <li>
+            <div class="details">
+                <span class="artist">
+                    @artist.Name
+                </span>
+            </div>
+        </li>
+    }
+</ul>
