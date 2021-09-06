@@ -18,6 +18,7 @@ namespace GigHub.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
+
             var artists = _context.Followings
                 .Where(a => a.FollowerId == userId)
                 .Select(a => a.Artist)
