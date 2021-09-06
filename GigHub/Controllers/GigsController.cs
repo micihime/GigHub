@@ -2,6 +2,7 @@
 using GigHub.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -97,6 +98,7 @@ namespace GigHub.Controllers
             {
                 Heading = "Edit a Gig",
                 Genres = _context.Genres.ToList(),
+                Id = gig.Id,
                 Date = gig.DateTime.ToString("d MMM yyyy"),
                 Time = gig.DateTime.ToString("HH:mm"),
                 Genre = gig.GenreId,
@@ -104,6 +106,34 @@ namespace GigHub.Controllers
             };
 
             return View("GigForm", viewModel);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(GigFormViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                vm.Genres = _context.Genres.ToList();
+                return View("GigForm", vm);
+            }
+
+            var userId = User.Identity.GetUserId();
+
+            var gig = _context.Gigs.SingleOrDefault(g => g.Id == vm.Id
+                                                         && g.ArtistId == userId);
+
+            gig.Id = vm.Id;
+            gig.DateTime = vm.GetDateTime();
+            gig.GenreId = vm.Genre;
+            gig.ArtistId = userId;
+            gig.Venue = vm.Venue;
+
+            _context.Gigs.AddOrUpdate(gig);
+            _context.SaveChanges();
+
+            return RedirectToAction("Mine");
         }
     }
 }
