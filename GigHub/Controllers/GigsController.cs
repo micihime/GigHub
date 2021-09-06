@@ -83,5 +83,25 @@ namespace GigHub.Controllers
 
             return RedirectToAction("Mine");
         }
+
+        [Authorize]
+        public ActionResult Edit(int gigId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            var gig = _context.Gigs.SingleOrDefault(g => g.Id == gigId
+                                      && g.ArtistId == userId);
+
+            var viewModel = new GigFormViewModel()
+            {
+                Genres = _context.Genres.ToList(),
+                Date = gig.DateTime.ToString("d MMM yyyy"),
+                Time = gig.DateTime.ToString("HH:mm"),
+                Genre = gig.GenreId,
+                Venue = gig.Venue
+            };
+
+            return View("Create", viewModel);
+        }
     }
 }
