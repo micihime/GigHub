@@ -28,7 +28,9 @@ span.field-validation-error {
     font-weight: bold;
 }
 
-.vertical-offset { margin-top: 10px }
+.vertical-offset {
+    margin-top: 10px
+}
 
 /* Bootstrap Overrides */
 .navbar-inverse {
@@ -140,3 +142,12 @@ body {
             .gigs > li .details .genre {
                 font-size: 15px;
             }
+
+        .gigs > li .actions {
+            font-size: 15px;
+            display: none;
+        }
+
+        .gigs > li:hover .actions {
+            display: block;
+        }
