@@ -42,19 +42,32 @@
                 var link = $(e.target);
                 var id = link.data("gig-id");
 
-                bootbox.confirm("Are you sure you want to cancel this gig?", function (result) {
-                    $.ajax({
-                        url: "/api/gigs/" + id,
-                        method: "GET" //"DELETE"
-                    })
-                        .done(function () {
-                            link.parents("li").fadeOut(function () {
-                                $(this).remove();
-                            });
+                bootbox.confirm({
+                    message: "Are you sure you want to cancel this gig?",
+                    buttons: {
+                        confirm: {
+                            label: 'Yes',
+                            className: 'btn-primary'
+                        },
+                        cancel: {
+                            label: 'No',
+                            className: 'btn-default'
+                        }
+                    },
+                    callback: function (result) {
+                        $.ajax({
+                            url: "/api/gigs/" + id,
+                            method: "GET" //"DELETE"
                         })
-                        .fail(function () {
-                            alert("Something failed!");
-                        });
+                            .done(function () {
+                                link.parents("li").fadeOut(function () {
+                                    $(this).remove();
+                                });
+                            })
+                            .fail(function () {
+                                alert("Something failed!");
+                            })
+                    },
                 });
             });
         });
