@@ -5,11 +5,11 @@ using System.Web.Mvc;
 
 namespace GigHub.Controllers
 {
-    public class ArtistsController : Controller
+    public class FollowingsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ArtistsController()
+        public FollowingsController()
         {
             _context = new ApplicationDbContext();
         }
