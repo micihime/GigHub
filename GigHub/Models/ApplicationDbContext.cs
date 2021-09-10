@@ -9,6 +9,9 @@ namespace GigHub.Models
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Attendance> Attendances { get; set; } //in order to be able to query this db table
         public DbSet<Following> Followings { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -27,8 +30,8 @@ namespace GigHub.Models
             //  or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY
             //  constraints.
             //removing the cascade on delete for Gigs and Attendance table
-            modelBuilder.Entity<Attendance>().
-                HasRequired(a => a.Gig)
+            modelBuilder.Entity<Attendance>()
+                .HasRequired(a => a.Gig)
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
@@ -40,6 +43,11 @@ namespace GigHub.Models
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(a => a.Artists)
                 .WithRequired(f => f.Follower)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<UserNotification>()
+                .HasRequired(a => a.User)
+                .WithMany()
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
