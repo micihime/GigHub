@@ -1,4 +1,5 @@
-﻿using GigHub.Models;
+﻿using GigHub.Dtos;
+using GigHub.Models;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,7 +18,7 @@ namespace GigHub.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        public IEnumerable<Notification> GetNotifications()
+        public IEnumerable<NotificationDto> GetNotifications()
         {
             var userId = User.Identity.GetUserId();
             var notifs = _context.UserNotifications.Where(un => un.UserId == userId)
@@ -25,7 +26,24 @@ namespace GigHub.Controllers.Api
                 .Include(n => n.Gig.Artist)
                 .ToList();
 
-            return notifs;
+            return notifs.Select(n => new NotificationDto()
+            {
+                DateTime = n.DateTime,
+                Gig = new GigDto
+                {
+                    Artist = new UserDto
+                    {
+                        Id = n.Gig.Artist.Id,
+                        Name = n.Gig.Artist.Name
+                    },
+                    DateTime = n.Gig.DateTime,
+                    Id = n.Gig.Id,
+                    IsCancelled = n.Gig.IsCancelled,
+                    Venue = n.Gig.Venue
+                },
+                OriginalDateTime = n.OriginalDateTime,
+                OriginalVenue = n.OriginalVenue
+            });
         }
     }
 }
