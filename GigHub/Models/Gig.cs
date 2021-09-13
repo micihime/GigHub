@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace GigHub.Models
 {
@@ -20,7 +21,7 @@ namespace GigHub.Models
         [StringLength(255)]
         public string Venue { get; set; }
 
-        public bool IsCancelled { get; set; }
+        public bool IsCancelled { get; private set; }
 
         public Genre Genre { get; set; } //navigation property
 
@@ -32,6 +33,18 @@ namespace GigHub.Models
         public Gig()
         {
             Attendances = new Collection<Attendance>();
+        }
+
+        public void Cancel()
+        {
+            IsCancelled = true;
+
+            var notif = new Notification(NotificationType.GigCancelled, this);
+
+            foreach (var attendee in Attendances.Select(a => a.Attendee))
+            {
+                attendee.Notify(notif);
+            }
         }
     }
 }
