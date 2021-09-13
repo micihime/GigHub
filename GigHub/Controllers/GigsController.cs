@@ -2,7 +2,6 @@
 using GigHub.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -122,16 +121,12 @@ namespace GigHub.Controllers
 
             var userId = User.Identity.GetUserId();
 
-            var gig = _context.Gigs.SingleOrDefault(g => g.Id == vm.Id
-                                                         && g.ArtistId == userId);
+            var gig = _context.Gigs
+                .Include(g => g.Attendances.Select(a => a.Attendee))
+                .SingleOrDefault(g => g.Id == vm.Id && g.ArtistId == userId);
 
-            gig.Id = vm.Id;
-            gig.DateTime = vm.GetDateTime();
-            gig.GenreId = vm.Genre;
-            gig.ArtistId = userId;
-            gig.Venue = vm.Venue;
+            gig.Update(vm.GetDateTime(), vm.Venue, vm.Genre);
 
-            _context.Gigs.AddOrUpdate(gig);
             _context.SaveChanges();
 
             return RedirectToAction("Mine");
