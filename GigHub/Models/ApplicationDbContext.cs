@@ -25,14 +25,9 @@ namespace GigHub.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) //overriding this method in order to be able to use Fluent API
         {
-            //getting rid of ERROR when updating the DB
-            //  Introducing FOREIGN KEY constraint 'FK_dbo.Attendances_dbo.Gigs_GigId' on table 'Attendances' may cause cycles
-            //  or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY
-            //  constraints.
-            //removing the cascade on delete for Gigs and Attendance table
             modelBuilder.Entity<Attendance>()
                 .HasRequired(a => a.Gig)
-                .WithMany()
+                .WithMany(g => g.Attendances) //because of adding reverse navigation properties
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ApplicationUser>()
@@ -47,7 +42,7 @@ namespace GigHub.Models
 
             modelBuilder.Entity<UserNotification>()
                 .HasRequired(a => a.User)
-                .WithMany()
+                .WithMany(u => u.UserNotifications) //because of adding reverse navigation properties
                 .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
