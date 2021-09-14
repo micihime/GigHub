@@ -22,7 +22,7 @@ namespace GigHub.Controllers.Api
         public IEnumerable<NotificationDto> GetNotifications()
         {
             var userId = User.Identity.GetUserId();
-            var notifs = _context.UserNotifications.Where(un => un.UserId == userId)
+            var notifs = _context.UserNotifications.Where(un => un.UserId == userId && !un.IsRead)
                 .Select(un => un.Notification)
                 .Include(n => n.Gig.Artist)
                 .ToList();
