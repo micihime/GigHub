@@ -32,6 +32,7 @@ namespace GigHub.Controllers.Api
                 cfg.CreateMap<ApplicationUser, UserDto>();
                 cfg.CreateMap<Gig, GigDto>();
                 cfg.CreateMap<Gig, GigDto>();
+                cfg.CreateMap<Notification, NotificationDto>();
             });
             var mapper = config.CreateMapper();
 
