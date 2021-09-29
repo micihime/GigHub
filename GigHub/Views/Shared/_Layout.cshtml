@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -51,8 +51,8 @@
             $.getJSON("/api/notifications", function (notifications) {
                 $(".js-notif-count")
                     .text(notifications.length)
-                    .removeClass("hide");
-                //.addClass("animated bounceInDown");
+                    .removeClass("hide")
+                .addClass("animate__animated animate__bounce");
             });
 
             $(".notifs").popover({
