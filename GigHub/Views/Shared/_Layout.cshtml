@@ -45,20 +45,23 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
+    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
     <script>
         $(document).ready(function () {
             $.getJSON("/api/notifications", function (notifications) {
-                $(".js-notif-count").text(notifications.length)
+                $(".js-notif-count")
+                    .text(notifications.length)
                     .removeClass("hide");
-                    //.addClass("animated bounceInDown");
+                //.addClass("animated bounceInDown");
             });
 
             $(".notifs").popover({
                 html: true,
                 title: "Notifications",
                 content: function () {
-                    return "Hello world";
+                    var compiled = _.template("Hello <%= name %>");
+                    var html = compiled({ name: 'test' });
+                    return html;
                 },
                 placement: "bottom"
             });
