@@ -46,6 +46,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
+    
     <script type="text/x-template" id="notifications-template">
         <ul>
             <%
@@ -81,9 +82,13 @@
             %>
         </ul>
     </script>
+    
     <script>
         $(document).ready(function () {
             $.getJSON("/api/notifications", function (notifications) {
+                if (notifications.length == 0)
+                    return;
+
                 $(".js-notif-count")
                     .text(notifications.length)
                     .removeClass("hide")
