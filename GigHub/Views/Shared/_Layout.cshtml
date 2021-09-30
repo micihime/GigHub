@@ -47,7 +47,39 @@
     @RenderSection("scripts", required: false)
     <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"></script>
     <script type="text/x-template" id="notifications-template">
-        Hello <%= name %>
+        <ul>
+            <%
+            _.each(notifs, function(notif){
+                if (notif.type == 1) { %>
+                    <li><%= notif.gig.artist.name %> has cancelled the gig at <%= notif.gig.venue %> at <%= notif.gig.dateTime %></li>
+                <%}
+
+                else if (notif.type == 2) {
+                    var changes = [],
+                        originalVlaues = [],
+                        newValues = [];
+
+                    if (notification.originalVenue != notification.gig.venue) {
+                        changes.push('venue');
+                        originalValues.push(notification.originalVenue);
+                        newValues.push(notification.gig.venue);
+                    }
+
+                    if (notification.originalVenue != notification.gig.venue) {
+                        changes.push('date/time');
+                        originalValues.push(notification.originalDateTime);
+                        newValues.push(notification.gig.dateTime);
+                    }
+            %>
+                    <li><%= notif.gig.artist.name %> has changed the <%= changes.join(' and ') %> of the gig from <%= originalValues.join('/') %> to <%= newValues.join('/') %></li>
+            <%
+                }
+            if (notif.type == 3) { %>
+            <li><%= notif.gig.artist.name %> has created a gig at <%= notif.gig.venue %> at <%= notif.gig.dateTime %></li>
+            <%}
+            })
+            %>
+        </ul>
     </script>
     <script>
         $(document).ready(function () {
@@ -55,19 +87,19 @@
                 $(".js-notif-count")
                     .text(notifications.length)
                     .removeClass("hide")
-                .addClass("animate__animated animate__bounce");
-            });
+                    .addClass("animate__animated animate__bounce");
 
-            $(".notifs").popover({
-                html: true,
-                title: "Notifications",
-                content: function () {
-                    var compiled = _.template($("#notifications-template").html());
-                    var html = compiled({ name: 'test' });
-                    return html;
-                },
-                placement: "bottom"
+                $(".notifs").popover({
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        return compiled({ notifs: notifications });
+                    },
+                    placement: "bottom"
+                });
             });
+           
         });
     </script>
 </body>
